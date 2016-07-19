@@ -1,0 +1,9 @@
+#
+- name: avahi - set host name
+  hostname:
+    name: "{{ project_name }}"
+
+- name: avahi - install
+  apt:
+    name: "avahi-daemon"
+    state: "present"
