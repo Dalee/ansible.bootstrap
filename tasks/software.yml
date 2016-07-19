@@ -1,0 +1,13 @@
+#
+- name: bootstrap - install mandatory software
+  apt:
+    name: "{{ item }}"
+    state: "present"
+  with_items:
+    - mc
+    - nano
+    - htop
+    - strace
+    - vim
+    - make
+    - git

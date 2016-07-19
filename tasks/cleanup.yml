@@ -1,0 +1,7 @@
+# cleanup
+- name: bootstrap - command-not-found suggester
+  apt:
+    name: "command-not-found"
+    state: "absent"
+  when: ansible_distribution == "Ubuntu"
+
