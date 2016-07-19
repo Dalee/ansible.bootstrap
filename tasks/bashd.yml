@@ -1,0 +1,8 @@
+#
+- name: bashd - install loader
+  template:
+    src: "environment.rc.j2"
+    dest: "/home/vagrant/.environment.rc"
+    mode: 0644
+    owner: "vagrant"
+    group: "vagrant"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -d /etc/bash.d ]; then
+	for env_file in /etc/bash.d/*; do
+		. $env_file
+	done
+fi

@@ -1,3 +1,4 @@
 - include: cleanup.yml
 - include: software.yml
 - include: nginx.yml
+- include: bashd.yml
