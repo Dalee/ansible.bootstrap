@@ -12,3 +12,25 @@
   lineinfile:
     dest: "/etc/hosts"
     line: "127.0.0.1 {{ project_name }}"
+
+- name: avahi - install avahi-aliases dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "syslog-ng"
+    - "python-avahi"
+    - "python-pip"
+
+- name: avahi - install avahi-aliases
+  shell: "pip install git+git://github.com/till/avahi-aliases.git@topics/make-it-run"
+  args:
+    creates: "/usr/local/bin/avahi-alias"
+
+- name: avahi - ensure avahi-aliases directory exists
+  file:
+    path: "/etc/avahi/aliases.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: 0644
