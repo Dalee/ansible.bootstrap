@@ -15,7 +15,7 @@
 - name: nginx - install
   apt:
     name: "nginx"
-    state: "present"
+    state: "latest"
 
 - name: nginx - create virtuals directory
   file:
