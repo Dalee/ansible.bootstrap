@@ -13,3 +13,11 @@
     - git
     - zip
     - unzip
+
+- name: bootstap - install pavlik enable
+  template:
+    src: "pavlik-enable.py.j2"
+    dest: "/usr/local/bin/pavlik-enable"
+    owner: "root"
+    group: "root"
+    mode: 0755
