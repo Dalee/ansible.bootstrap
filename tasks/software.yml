@@ -15,8 +15,8 @@
     - unzip
 
 - name: bootstap - install pavlik enable
-  template:
-    src: "pavlik-enable.py.j2"
+  copy:
+    src: "files/pavlik-enable"
     dest: "/usr/local/bin/pavlik-enable"
     owner: "root"
     group: "root"

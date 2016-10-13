@@ -60,16 +60,19 @@ print " - Your GitLab user name"
 print " - Your GitLab private token"
 print Color.ENDC
 
-cwd = os.getcwd()
-registry = url_prepare(get_input("Private repository URL: "))
+registry = os.environ.get("PRIVATE_REGISTRY_URL", None)
+if registry == "" or registry is None:
+    registry = url_prepare(get_input("Private repository URL: "))
+
 user = get_input("GitLab user name: ")
 token = get_input("GitLab token: ")
+cwd = os.getcwd()
 
 print ""
-print Color.BOLD + Color.BLUE + "Repository domain:\t" + Color.ENDC, registry
-print Color.BOLD + Color.BLUE + "User:\t\t" + Color.ENDC, user
-print Color.BOLD + Color.BLUE + "Token:\t\t" + Color.ENDC, token
-print Color.BOLD + Color.BLUE + "Write to:\t" + Color.ENDC, cwd
+print Color.BOLD + Color.BLUE + "Repository domain:\t" + Color.ENDC, Color.BOLD + registry + Color.ENDC
+print Color.BOLD + Color.BLUE + "User:\t\t\t" + Color.ENDC, Color.BOLD + user + Color.ENDC
+print Color.BOLD + Color.BLUE + "Token:\t\t\t" + Color.ENDC, Color.BOLD + token + Color.ENDC
+print Color.BOLD + Color.BLUE + "Will to:\t\t" + Color.ENDC, Color.BOLD + cwd + Color.ENDC
 print ""
 dialog = get_input("Proceed? [N/y]: ")
 
