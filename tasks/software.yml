@@ -13,3 +13,11 @@
     - git
     - zip
     - unzip
+
+- name: bootstap - install pavlik enable
+  copy:
+    src: "files/pavlik-enable"
+    dest: "/usr/local/bin/pavlik-enable"
+    owner: "root"
+    group: "root"
+    mode: 0755

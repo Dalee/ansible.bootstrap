@@ -1,0 +1,84 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+""" Enable private Dalee repository, generate auth.json and .npmrc
+    {{ ansible_managed }}
+"""
+from urllib import quote_plus
+from urlparse import urlparse
+import os
+import sys
+
+
+class Color:
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+
+
+def url_prepare(registry):
+    if not registry.startswith("http://") or not registry.startswith("https://"):
+        registry = "http://" + registry
+    return registry
+
+def write_npmrc(dir, registry, user, token):
+    result = urlparse(registry)
+    registry_url = "%s://%s:%s@%s/" % (result.scheme, quote_plus(user), quote_plus(token), result.netloc,)
+    line = "registry=%s" % registry_url
+    fp = open(dir + '/.npmrc', "w")
+    fp.write(line + "\n")
+    fp.close()
+
+
+def write_auth_json(dir, registry, user, token):
+    result = urlparse(registry)
+    line = """{
+    "http-basic": {
+        "%s": {
+            "username": "%s",
+            "password": "%s"
+        }
+    }
+}
+    """ % (result.netloc, user, token, )
+    fp = open(dir + '/auth.json', "w")
+    fp.write(line + "\n")
+    fp.close()
+
+
+def get_input(hint):
+    result = raw_input(Color.YELLOW + Color.BOLD + hint + Color.ENDC)
+    return result
+
+# start
+print Color.BOLD + Color.GREEN + "Ok, you'll need some extra things"
+print " - URL for private repository (check project documentation)"
+print " - Your GitLab user name"
+print " - Your GitLab private token"
+print Color.ENDC
+
+registry = os.environ.get("PRIVATE_REGISTRY_URL", None)
+if registry == "" or registry is None:
+    registry = url_prepare(get_input("Private repository URL: "))
+
+user = get_input("GitLab user name: ")
+token = get_input("GitLab token: ")
+cwd = os.getcwd()
+
+print ""
+print Color.BOLD + Color.BLUE + "Repository domain:\t" + Color.ENDC, Color.BOLD + registry + Color.ENDC
+print Color.BOLD + Color.BLUE + "User:\t\t\t" + Color.ENDC, Color.BOLD + user + Color.ENDC
+print Color.BOLD + Color.BLUE + "Token:\t\t\t" + Color.ENDC, Color.BOLD + token + Color.ENDC
+print Color.BOLD + Color.BLUE + "Will to:\t\t" + Color.ENDC, Color.BOLD + cwd + Color.ENDC
+print ""
+dialog = get_input("Proceed? [N/y]: ")
+
+if dialog.lower() not in ["y", "yes"]:
+    print Color.RED + "Aborted" + Color.ENDC
+    sys.exit(1)
+
+write_npmrc(cwd, registry, user, token)
+write_auth_json(cwd, registry, user, token)
