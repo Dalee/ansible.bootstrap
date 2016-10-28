@@ -20,14 +20,17 @@ class Color:
 
 
 def url_prepare(registry):
-    if not registry.startswith("http://") or not registry.startswith("https://"):
+    if not registry.startswith("http://") and not registry.startswith("https://"):
         registry = "http://" + registry
     return registry
 
 def write_npmrc(dir, registry, user, token):
     result = urlparse(registry)
-    registry_url = "%s://%s:%s@%s/" % (result.scheme, quote_plus(user), quote_plus(token), result.netloc,)
-    line = "registry=%s" % registry_url
+    registry_url = "%s://%s/" % (result.scheme, result.netloc,)
+    line = """registry=%s
+//%s/:_authToken=%s
+""" % (registry_url, result.netloc, token,)
+
     fp = open(dir + '/.npmrc', "w")
     fp.write(line + "\n")
     fp.close()
