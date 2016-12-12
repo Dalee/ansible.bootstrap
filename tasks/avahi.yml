@@ -23,7 +23,7 @@
     - "python-pip"
 
 - name: avahi - install avahi-aliases
-  shell: "pip install git+git://github.com/till/avahi-aliases.git@topics/make-it-run"
+  shell: "pip install git+git://github.com/airtonix/avahi-aliases.git"
   args:
     creates: "/usr/local/bin/avahi-alias"
 
