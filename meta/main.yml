@@ -5,9 +5,6 @@ galaxy_info:
   description: "Bootstrap vagrant machine, install nginx, some tools and uninstall crap"
   min_ansible_version: 1.4
   platforms:
-   - name: Debian
-     versions:
-      - jessie
    - name: Ubuntu
      versions:
       - trusty
