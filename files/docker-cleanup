@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+EXITED_CONTAINERS=$(docker ps -aq --filter 'exited=0')
+if [ ! -z "$EXITED_CONTAINERS" ]; then
+    echo "Clearing up exited containers"
+    docker rm ${EXITED_CONTAINERS}
+fi
+
+DANGLING_IMAGES=$(docker images -f "dangling=true" -q)
+if [ ! -z "$DANGLING_IMAGES" ]; then
+    echo "Clearing up dangling images"
+    docker rmi ${DANGLING_IMAGES}
+fi

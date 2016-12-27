@@ -14,10 +14,18 @@
     - zip
     - unzip
 
-- name: bootstap - install pavlik enable
+- name: bootstrap - install pavlik enable
   copy:
     src: "files/pavlik-enable"
     dest: "/usr/local/bin/pavlik-enable"
     owner: "root"
     group: "root"
     mode: 0755
+
+- name: bootstrap - install docker cleanup script
+  copy:
+     src: "files/docker-cleanup"
+     dest: "/usr/local/bin/docker-cleanup"
+     owner: "root"
+     group: "root"
+     mode: 0755
