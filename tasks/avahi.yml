@@ -8,24 +8,36 @@
     name: "avahi-daemon"
     state: "present"
 
+- name: avahi - install config
+  template:
+    src: "avahi-daemon.conf.j2"
+    dest: "/etc/avahi/avahi-daemon.conf"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
 - name: avahi - fix "sudo, unable to resolve host"
   lineinfile:
     dest: "/etc/hosts"
     line: "127.0.0.1 {{ project_name }}"
+
+- name: avahi - restart daemon (forced)
+  service:
+    name: "avahi-daemon"
+    state: "restarted"
 
 - name: avahi - install avahi-aliases dependencies
   apt:
     name: "{{ item }}"
     state: present
   with_items:
-    - "syslog-ng"
     - "python-avahi"
     - "python-pip"
 
 - name: avahi - install avahi-aliases
-  shell: "pip install git+git://github.com/airtonix/avahi-aliases.git"
+  shell: "pip install --upgrade git+https://github.com/Dalee/avahi-cname-aliases.git"
   args:
-    creates: "/usr/local/bin/avahi-alias"
+    creates: "/usr/local/bin/avahi-cname-aliases"
 
 - name: avahi - ensure avahi-aliases directory exists
   file:
@@ -33,4 +45,15 @@
     state: "directory"
     owner: "root"
     group: "root"
+    mode: 0655
+
+- name: avahi - install avahi-aliases supervisord unit
+  template:
+    src: "avahi-aliases.conf.j2"
+    dest: "/etc/supervisor/conf.d/avahi-aliases.conf"
+    owner: "root"
+    group: "root"
     mode: 0644
+
+- name: avahi - update supervisord (forced)
+  shell: "supervisorctl update && supervisorctl restart avahi-aliases"
