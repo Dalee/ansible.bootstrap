@@ -1,0 +1,21 @@
+#
+- name: avahi - install supervisord
+  apt:
+    name: "supervisor"
+    state: "installed"
+
+- name: avahi - install avahi-aliases supervisord unit
+  template:
+    src: "trusty/avahi-aliases.conf.j2"
+    dest: "/etc/supervisor/conf.d/avahi-aliases.conf"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: avahi - ensure supervisor started
+  service:
+    name: "supervisor"
+    state: "started"
+
+- name: avahi - update supervisord (forced)
+  shell: "supervisorctl update && supervisorctl restart avahi-aliases"

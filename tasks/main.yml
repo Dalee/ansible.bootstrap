@@ -2,4 +2,5 @@
 - include: software.yml
 - include: nginx.yml
 - include: avahi.yml
+- include: avahi-aliases.yml
 - include: bashd.yml

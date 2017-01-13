@@ -1,5 +1,3 @@
-# cleanup
-
 # workaround for Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
 # which is ubuntu script being run right after boot
 - name: bootstrap - stop unattended-upgrades
@@ -7,11 +5,8 @@
   register: kill_result
   failed_when: kill_result.rc > 1 # rc == 1 if the script is inactive
   changed_when: kill_result.rc == 0
-  when: ansible_distribution == "Ubuntu"
 
-- name: bootstrap - command-not-found suggester
+- name: bootstrap - remove command-not-found suggester
   apt:
     name: "command-not-found"
     state: "absent"
-  when: ansible_distribution == "Ubuntu"
-

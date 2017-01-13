@@ -8,9 +8,10 @@ install some mandatory software and some useful commands:
  * `pavlik-enable` [Comrade Pavlik](https://github.com/Dalee/comrade-pavlik) helper script
  * `docker-cleanup` Docker images/containers cleanup script
  * `avahi` daemon to advertise hostname
+ * `avahi-cname-aliases` [script](https://github.com/Dalee/avahi-cname-aliases) to advertise cname aliases for host via avahi 
  * `nginx` daemon
  * `~/.environment.rc` — loader for role-based environment variables
- (make sure to add loading of this file in `.bash_profile`)
+ (make sure to add this file to `.bash_profile`)
 
 ## Mandatory parameters
 

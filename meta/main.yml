@@ -1,13 +1,14 @@
 galaxy_info:
   author: "Dalee Dev"
   company: Dalee
-  license: BSD
+  license: MIT
   description: "Bootstrap vagrant machine, install nginx, some tools and uninstall crap"
-  min_ansible_version: 1.4
+  min_ansible_version: 2.0.0
   platforms:
    - name: Ubuntu
      versions:
       - trusty
+      - xenial
   categories:
    - system
 dependencies: []

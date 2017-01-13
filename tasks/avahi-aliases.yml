@@ -1,0 +1,27 @@
+#
+- name: avahi - install avahi-aliases dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "python-avahi"
+    - "python-pip"
+
+- name: avahi - install avahi-aliases
+  shell: "pip install --upgrade git+https://github.com/Dalee/avahi-cname-aliases.git"
+  args:
+    creates: "/usr/local/bin/avahi-cname-aliases"
+
+- name: avahi - ensure avahi-aliases directory exists
+  file:
+    path: "/etc/avahi/aliases.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: 0655
+
+- include: trusty/avahi-aliases.yml
+  when: ansible_distribution_release == "trusty"
+
+- include: xenial/avahi-aliases.yml
+  when: ansible_distribution_release == "xenial"

@@ -13,7 +13,6 @@
     - git
     - zip
     - unzip
-    - supervisor
 
 - name: bootstrap - install pavlik enable
   copy:

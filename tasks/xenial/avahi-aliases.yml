@@ -1,0 +1,15 @@
+#
+- name: avahi - install systemd unit for avahi-aliases
+  template:
+    src: "xenial/avahi-aliases.service.j2"
+    dest: "/lib/systemd/system/avahi-aliases.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+
+- name: avahi - enable systemd unit
+  systemd:
+    name: "avahi-aliases"
+    enabled: "yes"
+    daemon_reload: "yes"
+    state: "started"
