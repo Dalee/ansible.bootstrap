@@ -6,3 +6,27 @@
     mode: 0644
     owner: "vagrant"
     group: "vagrant"
+
+- name: bashd - make sure directory exists
+  file:
+    path: "/etc/bash.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+
+- name: bashd - install ps1
+  template:
+    src: "ps1.rc.j2"
+    dest: "/etc/bash.d/ps1.rc"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: bashd - install ps1
+  template:
+    src: "path.rc.j2"
+    dest: "/etc/bash.d/path.rc"
+    owner: "root"
+    group: "root"
+    mode: "0644"
