@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-EXITED_CONTAINERS=$(docker ps -aq --filter 'exited=0')
+EXITED_CONTAINERS=$(docker ps -aq --filter 'status=exited')
 if [ ! -z "$EXITED_CONTAINERS" ]; then
     echo "Clearing up exited containers"
     docker rm ${EXITED_CONTAINERS}
