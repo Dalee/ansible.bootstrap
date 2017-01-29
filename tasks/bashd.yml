@@ -23,7 +23,7 @@
     group: "root"
     mode: "0644"
 
-- name: bashd - install ps1
+- name: bashd - install path
   template:
     src: "path.rc.j2"
     dest: "/etc/bash.d/path.rc"
